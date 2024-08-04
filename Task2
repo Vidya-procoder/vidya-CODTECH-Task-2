@@ -1,0 +1,102 @@
+# vidya-CODTECH-Task-2
+
+
+
+
+
+
+
+
+
+
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class GradeManager {
+    private ArrayList<Double> grades;
+    private Scanner scanner;
+
+    public GradeManager() {
+        grades = new ArrayList<>();
+        scanner = new Scanner(System.in);
+    }
+
+    public void addGrade(double grade) {
+        grades.add(grade);
+    }
+
+    public double calculateAverage() {
+        if (grades.isEmpty()) {
+            return 0;
+        }
+
+        double sum = 0;
+        for (double grade : grades) {
+            sum += grade;
+        }
+        return sum / grades.size();
+    }
+
+    public String calculateLetterGrade(double average) {
+        if (average >= 90) {
+            return "A";
+        } else if (average >= 80) {
+            return "B";
+        } else if (average >= 70) {
+            return "C";
+        } else if (average >= 60) {
+            return "D";
+        } else {
+            return "F";
+        }
+    }
+
+    public double calculateGPA(double average) {
+        if (average >= 90) {
+            return 4.0;
+        } else if (average >= 80) {
+            return 3.0;
+        } else if (average >= 70) {
+            return 2.0;
+        } else if (average >= 60) {
+            return 1.0;
+        } else {
+            return 0.0;
+        }
+    }
+
+    public void displayResults() {
+        double average = calculateAverage();
+        String letterGrade = calculateLetterGrade(average);
+        double gpa = calculateGPA(average);
+
+        System.out.println("Average Grade: " + average);
+        System.out.println("Letter Grade: " + letterGrade);
+        System.out.println("GPA: " + gpa);
+    }
+
+    public void run() {
+        while (true) {
+            System.out.println("Enter a grade (or type 'done' to finish): ");
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("done")) {
+                break;
+            }
+
+            try {
+                double grade = Double.parseDouble(input);
+                addGrade(grade);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a numeric grade.");
+            }
+        }
+
+        displayResults();
+    }
+
+    public static void main(String[] args) {
+        GradeManager gradeManager = new GradeManager();
+        gradeManager.run();
+    }
+}
